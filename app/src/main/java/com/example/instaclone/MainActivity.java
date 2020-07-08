@@ -1,8 +1,10 @@
 package com.example.instaclone;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,12 +15,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ivPostImage;
     private Button btnTakePic;
     private Button btnSubmit;
+    private BottomNavigationView bottomNavigationView;
     private File photoFile;
     public String photoFileName = "photo.jpg";
     @Override
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         ivPostImage = findViewById(R.id.ivPostImage);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnTakePic = findViewById(R.id.btnTakePic);
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         //queryPosts();
         btnTakePic.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +75,25 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 savePost(descript, ParseUser.getCurrentUser(), photoFile);
+            }
+        });
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Fragment fragment;
+                switch (menuItem.getItemId()) {
+                    case R.id.action_home:
+                        // do something here
+                        return true;
+                    case R.id.action_compose:
+                        // do something here
+                        return true;
+                    case R.id.action_profile:
+                        // do something here
+                        return true;
+                    default: return true;
+                }
             }
         });
     }
