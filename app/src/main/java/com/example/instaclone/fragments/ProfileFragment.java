@@ -63,6 +63,12 @@ public class ProfileFragment extends Fragment {
 
         //TODO load profile photo;
         //Glide.with(getContext()).load(user.getProfilePhoto)
+
+        //Log.i(TAG, user.getParseFile("profilePhoto").getUrl());
+        //Glide.with(getContext()).load(user.getParseFile("profilePhoto").getUrl()).into(ivProfilePhoto);
+        //Log here if not working
+
+        Log.i(TAG, user.getParseFile("profilePhoto").getUrl());
         ivProfilePhoto.setImageResource(R.drawable.ic_heart_active);
         allUserPosts = new ArrayList<>();
         //set adapter
@@ -88,7 +94,7 @@ public class ProfileFragment extends Fragment {
                     Log.e(TAG, "something went wrong", e);
                 }
                 allUserPosts.addAll(posts);
-                Toast.makeText(getContext(), "number of items in posts "+Integer.toString(posts.size()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "number of items in posts "+ Integer.toString(posts.size()), Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
             }
         });

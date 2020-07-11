@@ -49,7 +49,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         }
 
         public void bind(Post post) {
-            Glide.with(context).load(post.getImage()).into(ivProfileGridImage);
+            Glide.with(context).load(post.getImage().getUrl()).into(ivProfileGridImage);
         }
     }
 }
