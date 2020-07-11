@@ -12,13 +12,16 @@ import android.widget.FrameLayout;
 
 import com.example.instaclone.fragments.ComposeFragment;
 import com.example.instaclone.fragments.PostsFragment;
+import com.example.instaclone.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Fragment fragment;
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
                         // do something here
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_profile:
                         // do something here
-                        fragment = new ComposeFragment();
+                        fragment = new ProfileFragment(ParseUser.getCurrentUser());
                         break;
                     default:
                         //should never run;

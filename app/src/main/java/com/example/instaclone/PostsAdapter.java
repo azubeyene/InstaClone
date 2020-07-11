@@ -1,6 +1,7 @@
 package com.example.instaclone;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post post = posts.get(position);
         holder.bind(post);
+        //TODO: Below SET ON CLICK LISTENERS
+        //attach on click listener on holder.tvUsername.setOnClickListener(...) and the rest of components
+        //if heart get clicked, then immideatly update the data base and and check post.is_heart to true and update heart to appear/ oppo otherwise
+        //if comment, then launch context.getFragmentManager... to commentFragment
+        //if username, then launch context.getFragmentManager... to ProfileFragment
     }
 
     @Override
@@ -57,12 +63,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         public void bind(Post post) {
             //bind the post elements to view holder
-            tvDescription.setText(post.getDescription());
-            tvUsername.setText(post.getUser().getUsername());
+            String username = post.getUser().getUsername();
+            String sourceString = "<b>" + username + "</b> " + post.getDescription();
+            tvUsername.setText(username);
+            tvDescription.setText(Html.fromHtml(sourceString));
             if (post.getImage()!=null){
                 Glide.with(context).load(post.getImage().getUrl()).into(ivImage);
             }
-
         }
     }
 }
