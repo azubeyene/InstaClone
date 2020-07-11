@@ -22,6 +22,7 @@ import com.example.instaclone.ProfileAdapter;
 import com.example.instaclone.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -65,11 +66,11 @@ public class ProfileFragment extends Fragment {
         //Glide.with(getContext()).load(user.getProfilePhoto)
 
         //Log.i(TAG, user.getParseFile("profilePhoto").getUrl());
-        //Glide.with(getContext()).load(user.getParseFile("profilePhoto").getUrl()).into(ivProfilePhoto);
-        //Log here if not working
+        if (user.getParseFile("profilePhoto")!=null){
+            Glide.with(getContext()).load(user.getParseFile("profilePhoto").getUrl()).into(ivProfilePhoto);
+        }
 
-        Log.i(TAG, user.getParseFile("profilePhoto").getUrl());
-        ivProfilePhoto.setImageResource(R.drawable.ic_heart_active);
+        //ivProfilePhoto.setImageResource(R.drawable.ic_heart_active);
         allUserPosts = new ArrayList<>();
         //set adapter
         adapter = new ProfileAdapter(getContext(), allUserPosts);

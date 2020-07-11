@@ -3,6 +3,8 @@ package com.example.instaclone;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +13,10 @@ import android.widget.EditText;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
+
+import java.io.ByteArrayOutputStream;
 
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
@@ -24,6 +29,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         if (ParseUser.getCurrentUser()!=null){
+            ParseUser.getCurrentUser().put("realName", "ZuzuMc");
+            //This code is from https://coffeeshots970976098.wordpress.com/
+            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_heart_inactive);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+            byte[] byteArray = stream.toByteArray();
+            ParseFile file = new ParseFile("default_profile.png", byteArray);
+            ParseUser.getCurrentUser().put("profilePhoto", file);
+            ParseUser.getCurrentUser().saveInBackground();
+
             goMainActivity();
         }
 

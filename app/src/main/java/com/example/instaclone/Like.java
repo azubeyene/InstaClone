@@ -8,6 +8,7 @@ import com.parse.ParseUser;
 public class Like extends ParseObject {
     public static final String KEY_LIKER = "liker";
     public static final String KEY_POST = "post";
+    public static final String KEY_POST_OWNER = "postOwner";
 
 
     public ParseUser getLiker(){
@@ -24,5 +25,11 @@ public class Like extends ParseObject {
 
     public void setPost(Post post){
         put(KEY_POST, post);
+        put(KEY_POST_OWNER, post.getUser());
     }
+
+    public ParseUser getPostOwner(){
+        return getParseUser(KEY_POST_OWNER);
+    }
+
 }

@@ -79,7 +79,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="0dp"
             android:layout_toEndOf="@+id/ivPostComment"
-            app:srcCompat="@drawable/ic_new_direct" />
+            app:srcCompat="@drawable/ic_newdirect_large" />
 
         <ImageView
             android:id="@+id/ivPostComment"

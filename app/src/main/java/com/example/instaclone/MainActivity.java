@@ -5,14 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.ClipData;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.example.instaclone.fragments.ComposeFragment;
+import com.example.instaclone.fragments.LikesFragment;
 import com.example.instaclone.fragments.PostsFragment;
 import com.example.instaclone.fragments.ProfileFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
 
@@ -32,21 +35,28 @@ public class MainActivity extends AppCompatActivity {
         frameLayout = findViewById(R.id.flContainer);
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
-
         //queryPosts();
-
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
+
+
                     case R.id.action_home:
                         // do something here
                         fragment = new PostsFragment();
                         break;
+
                     case R.id.action_compose:
                         // do something here
                         fragment = new ComposeFragment();
                         break;
+
+                    case R.id.action_likes:
+                        //navigate to likes page
+                        fragment = new LikesFragment();
+                        break;
+
                     case R.id.action_profile:
                         // do something here
                         fragment = new ProfileFragment(ParseUser.getCurrentUser());

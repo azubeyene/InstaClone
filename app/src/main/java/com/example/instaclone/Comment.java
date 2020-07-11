@@ -9,6 +9,7 @@ public class Comment extends ParseObject {
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_COMMENTER = "commenter";
     public static final String KEY_POST = "post";
+    public static final String KEY_POST_OWNER = "postOwner";
 
     public String getMessage(){
         return getString(KEY_MESSAGE);
@@ -30,6 +31,11 @@ public class Comment extends ParseObject {
 
     public void setPost(Post post){
         put(KEY_POST, post);
+        put(KEY_POST_OWNER, post.getUser());
+    }
+
+    public ParseUser getPostOwner(){
+        return getParseUser(KEY_POST_OWNER);
     }
 
 }

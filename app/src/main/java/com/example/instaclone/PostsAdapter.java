@@ -2,6 +2,7 @@ package com.example.instaclone;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,13 +53,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     class ViewHolder extends RecyclerView.ViewHolder{
         private TextView tvUsername;
         private TextView tvDescription;
+        private TextView tvRelativeTime;
         private ImageView ivImage;
+        private ImageView ivPostProfilePic;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvDescription = itemView.findViewById(R.id.tvDescription);
+            tvRelativeTime = itemView.findViewById(R.id.tvRelativeTime);
             ivImage = itemView.findViewById(R.id.ivImage);
+            ivPostProfilePic = itemView.findViewById(R.id.ivPostProfilePic);
         }
 
         public void bind(Post post) {
@@ -67,9 +72,21 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             String sourceString = "<b>" + username + "</b> " + post.getDescription();
             tvUsername.setText(username);
             tvDescription.setText(Html.fromHtml(sourceString));
+            //post.getCreatedAt.getTime
+            String relativeDate = DateUtils.getRelativeTimeSpanString(post.getCreatedAt().getTime(),
+                    System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+            tvRelativeTime.setText(relativeDate);
             if (post.getImage()!=null){
                 Glide.with(context).load(post.getImage().getUrl()).into(ivImage);
             }
+
+            if (post.getUser().getParseFile("profilePhoto")!=null){
+                //Set this pic as profile pic on main comment
+                Glide.with(context).load(post.getUser().getParseFile("profilePhoto").getUrl()).into(ivPostProfilePic);
+            } else {
+                ivPostProfilePic.setImageResource(R.drawable.ic_person_black_24dp);
+            }
+
         }
     }
 }
