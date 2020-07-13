@@ -23,6 +23,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@+id/ivCommentsPostImage"
         android:layout_toEndOf="@+id/ivMyProfilePic"
         android:text="TextView"
         android:textSize="12sp" />
@@ -31,6 +33,7 @@
         android:id="@+id/rvComments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/etAddComment"
         android:layout_below="@+id/tvCommentsRelativeTime"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
@@ -44,6 +47,49 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivMyProfilePic"
+        android:text="TextView"
+        android:textSize="10sp" />
+
+    <EditText
+        android:id="@+id/etAddComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toStartOf="@+id/btnSubmitComment" />
+
+    <Button
+        android:id="@+id/btnSubmitComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Send" />
+
+    <ImageView
+        android:id="@+id/ivCommentsPostImage"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvCommentLikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCommentsDescription"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_toStartOf="@+id/ivCommentsPostImage"
+        android:layout_toEndOf="@+id/tvCommentsRelativeTime"
         android:text="TextView"
         android:textSize="10sp" />
 </RelativeLayout>

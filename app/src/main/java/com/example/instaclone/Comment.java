@@ -28,7 +28,6 @@ public class Comment extends ParseObject {
     public ParseObject getPost(){
         return getParseObject(KEY_POST);
     }
-
     public void setPost(Post post){
         put(KEY_POST, post);
         put(KEY_POST_OWNER, post.getUser());

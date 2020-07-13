@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ import com.example.instaclone.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,17 +42,25 @@ public class CommentsFragment extends Fragment {
     private List<Comment> allCommentsPosts;
     private CommentsAdapter adapter;
     private ImageView ivMyProfilePic;
+    private ImageView ivCommentsPostImage;
+
     private TextView tvCommentsDescription;
     private TextView tvCommentsRelativeTime;
+    private TextView tvCommentLikes;
+
+    private EditText etAddComment;
+    private Button btnSubmitComment;
     private Post post;
+    private int numOfLikes;
 
 
     public CommentsFragment() {
         // Required empty public constructor
     }
 
-    public CommentsFragment(Post post){
+    public CommentsFragment(Post post, int numOfLikes){
         this.post = post;
+        this.numOfLikes = numOfLikes;
     }
 
     @Override
@@ -63,8 +74,13 @@ public class CommentsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ivMyProfilePic = view.findViewById(R.id.ivMyProfilePic);
+        ivCommentsPostImage = view.findViewById(R.id.ivCommentsPostImage);
         tvCommentsDescription = view.findViewById(R.id.tvCommentsDescription);
         tvCommentsRelativeTime = view.findViewById(R.id.tvCommentsRelativeTime);
+        tvCommentLikes = view.findViewById(R.id.tvCommentLikes);
+
+        etAddComment = view.findViewById(R.id.etAddComment);
+        btnSubmitComment = view.findViewById(R.id.btnSubmitComment);
 
         String username = post.getUser().getUsername();
         String sourceString = "<b>" + username + "</b> " + post.getDescription();
@@ -73,6 +89,8 @@ public class CommentsFragment extends Fragment {
         String relativeDate = DateUtils.getRelativeTimeSpanString(post.getCreatedAt().getTime(),
                 System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
         tvCommentsRelativeTime.setText(relativeDate);
+        tvCommentLikes.setText(Integer.toString(numOfLikes) + " likes");
+        Log.i(TAG, "comments init is being run");
 
         if (post.getUser().getParseFile("profilePhoto")!=null){
             //Set this pic as profile pic on main comment
@@ -81,13 +99,39 @@ public class CommentsFragment extends Fragment {
             ivMyProfilePic.setImageResource(R.drawable.ic_person_black_24dp);
         }
 
+        if (post.getImage()!=null){
+            //Set this pic as profile pic on main comment
+            Glide.with(getContext()).load(post.getImage().getUrl()).into(ivCommentsPostImage);
+        } else {
+            ivCommentsPostImage.setImageResource(R.drawable.ic_person_black_24dp);
+        }
+
         rvComments = view.findViewById(R.id.rvComments);
         allCommentsPosts = new ArrayList<>();
 
-        adapter = new CommentsAdapter(getContext(), allCommentsPosts);
+        adapter = new CommentsAdapter(getContext(), allCommentsPosts, post);
         rvComments.setAdapter(adapter);
         rvComments.setLayoutManager(new LinearLayoutManager(getContext()));
         queryComments();
+        btnSubmitComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String comment = etAddComment.getText().toString();
+                if (comment.isEmpty()){
+                    Toast.makeText(getContext(), "Comment must be non-empty", Toast.LENGTH_SHORT);
+                    return;
+                }
+                Log.i(TAG, "submit btn being pressed");
+                //Create a comment and send to Parse data base
+                Comment newComment = new Comment();
+                newComment.setMessage(comment);
+                newComment.setCommenter(ParseUser.getCurrentUser());
+                newComment.setPost(post);
+                newComment.saveInBackground();
+                etAddComment.setText("");
+                //TODO: Auto add comment to comments list ie comments.add(0, newComment)
+            }
+        });
     }
 
     private void queryComments() {

@@ -56,8 +56,9 @@ public class LikesAdapter extends RecyclerView.Adapter<LikesAdapter.ViewHoler> {
         }
 
         public void bind(Like like) {
-            tvLikedNotify.setText(like.getLiker().getUsername() +"liked your post!");
+            tvLikedNotify.setText(like.getLiker().getUsername() +" liked your post!");
             if (like.getLiker().getParseFile("profilePhoto")!=null && like.getPost().getParseFile(Post.KEY_Image)!=null){
+                Log.i(TAG, "we found a like and object");
                 Glide.with(context).load(like.getLiker().getParseFile("profilePhoto").getUrl()).into(ivLikesProfilePic);
                 Glide.with(context).load(like.getPost().getParseFile(Post.KEY_Image).getUrl()).into(ivLikedPost);
             } else {

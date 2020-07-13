@@ -67,6 +67,7 @@ public class LikesFragment extends Fragment {
         query.whereEqualTo(Like.KEY_POST_OWNER, ParseUser.getCurrentUser());
 
         query.include(Like.KEY_LIKER); //this includes users as well as posts as they are linked
+        query.include(Like.KEY_POST);
         query.setLimit(20);
         query.addDescendingOrder(Post.KEY_CREATED_AT);
 
@@ -78,7 +79,6 @@ public class LikesFragment extends Fragment {
                     Log.e(TAG, "something went wrong", e);
                 }
                 allLikePosts.addAll(likePosts);
-                Toast.makeText(getContext(), "number of items in posts "+ Integer.toString(likePosts.size()), Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
             }
         });

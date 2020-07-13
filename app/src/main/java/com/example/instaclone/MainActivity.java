@@ -8,8 +8,12 @@ import androidx.fragment.app.FragmentManager;
 import android.content.ClipData;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.instaclone.fragments.ComposeFragment;
 import com.example.instaclone.fragments.LikesFragment;
@@ -33,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
         frameLayout = findViewById(R.id.flContainer);
+        //Toolbar toolbar = findViewById(R.id.toolbar_main);
+        //setActionBar(toolbar);
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
         //queryPosts();
@@ -40,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-
-
                     case R.id.action_home:
                         // do something here
                         fragment = new PostsFragment();
@@ -76,5 +80,4 @@ public class MainActivity extends AppCompatActivity {
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_home);
     }
-
 }
