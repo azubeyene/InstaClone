@@ -55,6 +55,8 @@ Here's a walkthrough of implemented user stories:
 
 ![](KaptureInsta2.gif)
 
+![](KaptureInsta3.gif)
+
 
 GIF created with [Kap](https://getkap.co/).
 
